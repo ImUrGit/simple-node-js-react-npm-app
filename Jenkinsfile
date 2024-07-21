@@ -1,23 +1,26 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'node:14' // Use an appropriate Node.js version
+        }
+    }
     stages {
         stage('Environment Info') {
             steps {
                 sh 'echo "Environment Variables:"'
                 sh 'env'
                 sh 'echo "Node.js Version:"'
-                sh 'node -v || echo "Node.js not installed"'
+                sh 'node -v'
                 sh 'echo "npm Version:"'
-                sh 'npm -v || echo "npm not installed"'
+                sh 'npm -v'
                 sh 'echo "Which Node.js:"'
-                sh 'which node || echo "Node.js not found"'
+                sh 'which node'
                 sh 'echo "Which npm:"'
-                sh 'which npm || echo "npm not found"'
+                sh 'which npm'
                 sh 'echo "OS Info:"'
                 sh 'uname -a'
-                sh 'lsb_release -a || echo "lsb_release command not found"'
                 sh 'echo "Installed Packages:"'
-                sh 'dpkg -l || rpm -qa || echo "Package manager not found"'
+                sh 'dpkg -l || rpm -qa'
             }
         }
         stage('Build') {
