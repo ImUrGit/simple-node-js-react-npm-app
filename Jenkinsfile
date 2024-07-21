@@ -13,7 +13,7 @@ pipeline {
                     sh 'docker pull node:14'
 
                     // Run npm install inside the Docker container
-                    sh 'docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app node:14 npm install'
+                    sh 'docker run --rm -v ${pwd()}:/usr/src/app -w /usr/src/app node:14 npm install'
                 }
             }
         }
@@ -21,7 +21,7 @@ pipeline {
             steps {
                 script {
                     // Run npm test inside the Docker container
-                    sh 'docker run --rm -v "$PWD":/usr/src/app -w /usr/src/app node:14 npm test'
+                    sh 'docker run --rm -v ${pwd()}:/usr/src/app -w /usr/src/app node:14 npm test'
                 }
             }
         }
