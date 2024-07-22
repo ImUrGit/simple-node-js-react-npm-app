@@ -1,23 +1,26 @@
 pipeline {
     agent any
+    environment {
+        http_proxy = 'http://proxy.server.com:port'
+        https_proxy = 'http://proxy.server.com:port'
+        HTTP_PROXY = 'http://proxy.server.com:port'
+        HTTPS_PROXY = 'http://proxy.server.com:port'
+    }
     stages {
         stage('Checkout SCM') {
             steps {
-                // Correctly specify the repository URL
                 git url: 'https://github.com/ImUrGit/simple-node-js-react-npm-app.git', branch: 'master'
             }
         }
 
         stage('OWASP DependencyCheck') {
             steps {
-                // Run OWASP DependencyCheck
-                dependencyCheck additionalArguments: '--format HTML --format XML', odcInstallation: 'OWASP DependencyCheck'
+                dependencyCheck additionalArguments: '--format HTML --format XML --cveValidForHours 48', odcInstallation: 'Default'
             }
         }
     }
     post {
         success {
-            // Publish the dependency check report
             dependencyCheckPublisher pattern: 'dependency-check-report.xml'
         }
     }
