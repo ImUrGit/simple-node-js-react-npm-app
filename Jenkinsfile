@@ -15,7 +15,7 @@ pipeline {
 
         stage('OWASP DependencyCheck') {
             steps {
-                dependencyCheck additionalArguments: '--format HTML --format XML --cveValidForHours 48', odcInstallation: 'Default'
+                dependencyCheck additionalArguments: '--format HTML --format XML --cveValidForHours 48', odcInstallation: 'Owasp DependencyCheck'
             }
         }
     }
