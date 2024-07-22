@@ -16,7 +16,7 @@ pipeline {
                 sh './jenkins/scripts/deliver.sh'
                 script {
                     try {
-                        timeout(time: 30, unit: 'MINUTES') {
+                        timeout(time: 30, unit: 'SECONDS') {
                             input message: 'Finished using the web site? (Click "Proceed" to continue)'
                         }
                     } catch (err) {
