@@ -14,7 +14,15 @@ pipeline {
         stage('Deliver') {
             steps {
                 sh './jenkins/scripts/deliver.sh'
-                input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                script {
+                    try {
+                        timeout(time: 30, unit: 'MINUTES') {
+                            input message: 'Finished using the web site? (Click "Proceed" to continue)'
+                        }
+                    } catch (err) {
+                        echo 'Input timeout or interruption occurred. Proceeding automatically.'
+                    }
+                }
                 sh './jenkins/scripts/kill.sh'
             }
         }
